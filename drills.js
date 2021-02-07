@@ -239,7 +239,9 @@ class LinkedList {
   insertAt(int, item) {
     const current = this.head;
     for (i = 0; i < int - 1; i++) {
-      current = current.next;
+      if (current.next) {
+        current = current.next;
+      };
     };
     current = new Node(item, current)
   };
@@ -471,23 +473,29 @@ function bfs(tree, values=[]) {
   return values;
 };
 
-
+function removeDuplicates(string) {
+  const obj = {};
+  string.split(' ').forEach(word => {
+    obj[word] = 1;
+  });
+  return Object.keys(obj);
+};
 
 /*              EXECUTIONS                 */
 
-console.log('countSheep(5)');
-countSheep(5);
-console.log('powerCalculator(10, 2):', powerCalculator(10, 2));
-console.log('reverseString("What a year, 2020"):', reverseString('What a year, 2020.'));
-console.log('triangularNumber(5):', triangularNumber(5));
-console.log(stringSplitter('Battle of the Vowels: Hawaii vs. Grozny'));
-console.log(fibonacci(3));
-console.log(factorial(5));
-console.log(outOfMaze(maze, [0,0]))
-console.log(anagram('aal'));
-console.log(URLify('google.com/some query here'))
-console.log(maxSum([4, 6, -3, 5, -2, 1]));
-console.log(mergeArraysSorted([5,2,6], [3, 1]));
-console.log(removeCharacters('Battle of the Vowels: Hawaii vs. Grozny', 'aeiou'))
-console.log(productOfRest([1,3,9,4]));
-console.log(twoDeeArray(Input));
+// console.log('countSheep(5)') && countSheep(5);
+// console.log('powerCalculator(10, 2):', powerCalculator(10, 2));
+// console.log('reverseString("What a year, 2020"):', reverseString('What a year, 2020.'));
+// console.log('triangularNumber(5):', triangularNumber(5));
+// console.log(stringSplitter('Battle of the Vowels: Hawaii vs. Grozny'));
+// console.log(fibonacci(3));
+// console.log(factorial(5));
+// console.log(outOfMaze(maze, [0,0]))
+// console.log(anagram('aal'));
+// console.log(URLify('google.com/some query here'))
+// console.log(maxSum([4, 6, -3, 5, -2, 1]));
+// console.log(mergeArraysSorted([5,2,6], [3, 1]));
+// console.log(removeCharacters('Battle of the Vowels: Hawaii vs. Grozny', 'aeiou'))
+// console.log(productOfRest([1,3,9,4]));
+// console.log(twoDeeArray(Input));
+console.log(removeDuplicates('hey hi hey hi'));
