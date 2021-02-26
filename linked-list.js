@@ -1,70 +1,122 @@
-const linkedList = function () {
-  
-  const self = this;
+class _Node {
+  constructor(value, next) {
+    this.value(value);
+    this.next(next);
+  }
+}
 
-  const Node = function(value, next) {
-    this.value = value;
-    this.next = next;
+// Linked List definition
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+  find(item) {
+    let current = this.head;
+    while (current.value !== item) {
+      if (!current.next) return null;
+      current = current.next;
+    }
+    return current;
+  }
+
+  insertFirst(item) {
+    this.head = new Node(item, this.head);
+  }
+
+  insertLast(item) {
+    let current = this.head;
+    while (current.next !== null) {
+      current = current.next;
+    }
+    current.next = new Node(item, null)
+  }
+
+  insertBefore(find, item) {
+    const current = this.head;
+    while (current.next.value !== find) {
+      current = current.next;
+    }
+    const node = new Node(item, current.next)
+    current.next = node;
+  }
+
+  insertAfter(find, item) {
+    const current = this.head;
+    while (current.value !== find) {
+      current = current.next;
+    }
+    current.next = new Node(item, current.next);
   };
 
-  let head = null;
-  let last = null;
-  let first = new Node(null, last);
-
-  self.insert = (value) => {
-    if (!first.value) {
-      first = last = new Node(value, last);
-    } else if (!last) {
-      last = new Node(value, null);
-    } else {
-      head = first;
-      while (head.next) {
-        head = head.next;
+  insertAt(int, item) {
+    const current = this.head;
+    for (i = 0; i < int - 1; i++) {
+      if (current.next) {
+        current = current.next;
       };
-      head.next = new Node(value, null);
+    };
+    current = new Node(item, current)
+  };
+
+  remove(item) {
+    let current = this.head;
+    while (current.next.value !== item) {
+      current.next = current.next.next;
+      ;
     }
   };
 
-  self.show = () => {
-    head = first;
-    while (head) {
-      console.log(head);
-      head = head.next;
+  reverse() {
+    let current = this.head;
+    let previous = null;
+    while (current.value) {
+      const temp = current.next;
+      current.next = previous;
+      current = temp;
+      previous = current;
     };
   };
 
-  self.update = (value, newValue) => {
-    head = first;
-    while (head) {
-      if (head.value === value) {
-        head.value = newValue;
+  thirdFromEnd() {
+    let current = this.head;
+    while (current.next.next.next) {
+      current = current.next;
+      ;
+    }
+    return current;
+  };
+
+  middleOfList() {
+    let current = this.head;
+    let idx = 0;
+    while (current.next) {
+      current = current.next;
+      idx++;
+    };
+    const limit = Math.ceil(idx / 2);
+    current = this.head;
+    let previous;
+    for (i = 0; i < limit; i++) {
+      previous = current;
+      current = current.next;
+    };
+    if (limit % 2 === 0) {
+      return [previous, current];
+    }
+    return current;
+  };
+
+  // Detects if there is a loop
+  detectCycle() {
+    let current = this.head;
+    let previous = [];
+    while (current.next) {
+      if (previous.includes(current.value)) {
+        return true;
       };
-      head = head.next;
+      previous.push(current);
+      current = current.next;
     };
+    return false;
   };
-
-  self.delete = (value) => {
-    head = first;
-    if (first.value === value) {
-      first = first.next;
-    };
-    while (head.next && head.next.value !== value) {
-      head = head.next;
-    };
-    if (!head || head.value !== value) {
-      return 'Value not found.';
-    };
-    head.next = head.next.next;
-  };
-
-  return self;
 };
-
-/* EXECUTIONS */
-
-const list = new linkedList();
-
-list.insert(1);
-list.insert(2);
-list.update(2, 5);
-list.show();
